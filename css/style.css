@@ -1,0 +1,919 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    color: #333;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* Header Styles */
+header {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+
+}
+
+.logo {
+    font-size: 30px;
+    font-weight: normal;
+    color: #333;
+    white-space: nowrap;
+    padding-left: 40px;
+}
+
+/* Burger Menu - Pure CSS */
+.burger-toggle {
+    display: none;
+}
+
+.burger-menu {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    padding: 5px;
+    margin-left: auto;
+    margin-right: 20px;
+    z-index: 1001;
+}
+
+.burger-menu span {
+    width: 25px;
+    height: 3px;
+    background-color: #333;
+    margin: 3px 0;
+    transition: 0.3s;
+    display: block;
+}
+
+/* Burger animation */
+.burger-toggle:checked ~ .burger-menu span:nth-child(1) {
+    transform: rotate(-45deg) translate(-5px, 6px);
+}
+
+.burger-toggle:checked ~ .burger-menu span:nth-child(2) {
+    opacity: 0;
+}
+
+.burger-toggle:checked ~ .burger-menu span:nth-child(3) {
+    transform: rotate(45deg) translate(-5px, -6px);
+}
+
+/* Search Container */
+.search-container {
+    position: relative;
+    margin-left: auto;
+    margin-right: 20px;
+}
+
+.search-input {
+    width: 50px;
+    height: 40px;
+    border: 2px solid #333;
+    border-radius: 20px;
+    padding: 10px 40px 10px 20px;
+    font-size: 16px;
+    outline: none;
+    transition: width 0.4s ease;
+    cursor: pointer;
+}
+
+.search-input:focus {
+    width: 250px;
+    cursor: text;
+}
+
+.search-input::placeholder {
+    color: transparent;
+    transition: color 0.3s;
+}
+
+.search-input:focus::placeholder {
+    color: #999;
+}
+
+.search-btn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    color: #333;
+    pointer-events: none;
+}
+
+.search-btn .icon {
+    width: 16px;
+    height: 16px;
+}
+
+/* Sign In Button */
+.sign-in-btn {
+    padding: 10px 25px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    margin-right: 20px;
+    display: inline-block;
+}
+
+.sign-in-btn:hover {
+    background-color: #000;
+    transform: scale(1.05);
+}
+
+/* Modal - Pure CSS */
+.modal {
+    position: fixed;
+    z-index: -1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal:target {
+    opacity: 1;
+    visibility: visible;
+    z-index: 2000;
+}
+
+.modal-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 40px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 400px;
+    animation: slideUp 0.3s ease;
+    z-index: 2001;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translate(-50%, -30%);
+        opacity: 0;
+    }
+    to {
+        transform: translate(-50%, -50%);
+        opacity: 1;
+    }
+}
+
+.close-modal {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    font-size: 30px;
+    color: #666;
+    transition: color 0.3s;
+}
+
+.close-modal:hover {
+    color: #000;
+}
+
+.auth-form h2 {
+    margin-bottom: 25px;
+    color: #333;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+    font-weight: 500;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #333;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.submit-btn:hover {
+    background-color: #000;
+}
+
+.form-footer {
+    text-align: center;
+    margin-top: 15px;
+    color: #666;
+}
+
+.form-footer a {
+    color: #333;
+    text-decoration: underline;
+}
+
+/* Navigation */
+.nav-header {
+    display: flex;
+    width: auto;
+}
+
+.nav-item {
+    position: relative;
+    text-align: center;
+    padding: 5px 20px;
+    font-size: 19px;
+    border-left: 1px solid #333;
+}
+
+.nav-item.has-submenu::after {
+    content: " ▼";
+    font-size: 12px;
+    margin-left: 5px;
+    transition: transform 0.3s;
+}
+
+.nav-item.has-submenu:hover::after {
+    transform: rotate(180deg);
+}
+
+.submenu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    min-width: 200px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+    z-index: 1000;
+    margin-top: 5px;
+}
+
+.nav-item:hover .submenu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.submenu li {
+    border-bottom: 1px solid #eee;
+}
+
+.submenu li:last-child {
+    border-bottom: none;
+}
+
+.submenu a {
+    display: block;
+    padding: 12px 20px;
+    color: #333;
+    transition: background-color 0.3s;
+    text-align: left;
+}
+
+.submenu a:hover {
+    background-color: #f0f0f0;
+}
+
+.nav-link {
+    background-color: white;
+    color: black;
+    padding: 5px;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.nav-link:hover {
+    background-color: #f0f0f0;
+}
+
+/* Scroll to Top Button - Smooth Transition */
+.scroll-to-top {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    width: 50px;
+    height: 50px;
+    background-color: #31343a;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 24px;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    transition: all 0.4s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    text-decoration: none;
+}
+
+.scroll-to-top:hover {
+    background-color: #000;
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+}
+
+/* Hero Section */
+.hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-image: url("../images/view.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.hero h1 {
+    position: relative;
+    font-size: 60px;
+    font-weight: normal;
+    max-width: 800px;
+    color: white;
+    text-align: center;
+}
+
+/* CSS Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fadeInUp 1s ease-out;
+}
+
+.animate-slide-in {
+    animation: fadeInUp 0.8s ease-out;
+}
+
+/* Gallery Section */
+.gallery-section {
+    max-width: 2050px;
+    margin: 0 auto;
+    padding: 50px 40px;
+}
+
+.gallery-section h3 {
+    font-size: 50px;
+    font-weight: normal;
+    color: #000;
+}
+
+.gallery-section h2 {
+    font-size: 20px;
+    font-weight: normal;
+    color: #000;
+}
+
+.view-gallery {
+    color: #2b16e2;
+    text-decoration: none;
+    font-size: 40px;
+    border-bottom: 3px solid #3a0ce1;
+    transition: color 0.3s ease;
+}
+
+.view-gallery:hover {
+    color: #1a0a99;
+}
+
+.gallery {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    margin: 80px 0 0;
+}
+
+.image-overlay-container {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    border-radius: 8px;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.image-overlay-container img {
+    width: 90%;
+    display: block;
+    border: 1px solid #ddd;
+    transition: opacity 0.4s ease, filter 0.4s ease, transform 0.4s ease;
+    opacity: 0.2;
+    filter: grayscale(80%) blur(2px);
+}
+
+.image-overlay-text {
+    position: absolute;
+    width: 300px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    font-size: 28px;
+    font-weight: bold;
+    background: linear-gradient(-45deg, transparent 32px, #4c515b 0);
+    padding: 30px 50px;
+    z-index: 10;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.image-overlay-container:hover img {
+    opacity: 1;
+    filter: grayscale(0%) blur(0);
+    transform: scale(1.05);
+}
+
+.image-overlay-container:hover .image-overlay-text {
+    opacity: 0;
+}
+
+.gallery p {
+    margin-top: 10px;
+    font-size: 20px;
+    color: #333;
+    line-height: 1.4;
+}
+
+/* About Section */
+.about h2 {
+    font-size: 20px;
+}
+
+.about {
+    max-width: 1000px;
+    padding: 0px 40px 40px;
+    font-size: 40px;
+    line-height: 1.8;
+}
+
+.about p {
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.about a.read-story {
+    color: inherit;
+    text-decoration: underline;
+    transition: color 0.3s ease;
+}
+
+.about a.read-story:hover {
+    color: #2b16e2;
+}
+
+/* Testimonials Section */
+.testimonials {
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 60px 40px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    border-radius: 15px;
+}
+
+.testimonials h2 {
+    text-align: center;
+    font-size: 45px;
+    margin-bottom: 50px;
+    color: #333;
+}
+
+.testimonials-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.testimonial-card {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.stars {
+    color: #ffd700;
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.testimonial-text {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 15px;
+    font-style: italic;
+}
+
+.testimonial-author {
+    font-size: 16px;
+    color: #888;
+    font-weight: 500;
+}
+
+/* Dates Section */
+.dates-section {
+    position: relative;
+    background-image: url("../images/caldera.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    color: white;
+    text-align: left;
+    padding: 60px 60px;
+    min-height: 100px;
+    display: flex;
+    height: 80vh;
+}
+
+.dates-section::before {
+    width: 100%;
+    height: 100%;
+}
+
+.dates-section h3 {
+    font-size: 80px;
+    font-weight: normal;
+}
+
+.dates-section h2 {
+    font-size: 20px;
+    font-weight: normal;
+}
+
+.book-btn {
+    padding: 20px 15px;
+    background-color: white;
+    color: #000;
+    border-radius: 90px;
+    cursor: pointer;
+    font-size: 30px;
+    font-family: 'Garamond', serif;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.book-btn:hover {
+    background-color: #f0f0f0;
+    transform: scale(1.05);
+}
+
+/* Footer */
+.site-footer {
+    background-color: #000;
+    color: #fff;
+    padding: 90px 60px 20px;
+    font-family: Arial, sans-serif;
+}
+
+.footer-section p {
+    font-size: 30px;
+    line-height: 2.0;
+}
+
+.title-divider {
+    border: none;
+    height: 1px;
+    background-color: #fff;
+    width: 50px;
+    margin-top: 19px;
+}
+
+.footer-contacts {
+    margin: 25px 0 100px 0;
+}
+
+.footer-contacts p {
+    font-size: 14px;
+    color: #888;
+}
+
+.footer-contacts a.contact-link {
+    color: #fcfcfc;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-contacts a.contact-link:hover {
+    color: #fff;
+}
+
+.footer-socials {
+    margin-top: 20px;
+    border: none;
+    height: 1px;
+    background-color: #fff;
+    width: 90%;
+    margin: 19px 0 70px 0;
+}
+
+.social-links {
+    display: flex;
+    gap: 10px;
+    padding-top: 30px;
+}
+
+.social-links a {
+    color: #fff;
+    font-size: 20px;
+    text-decoration: none;
+    transition: color 0.3s, transform 0.3s;
+}
+
+.social-links a:hover {
+    color: #888;
+    transform: scale(1.2);
+}
+
+/* Media Queries for Responsive Design */
+
+/* Tablets */
+@media (max-width: 1024px) {
+    .gallery {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+    }
+
+    .hero h1 {
+        font-size: 45px;
+    }
+
+    .dates-section h3 {
+        font-size: 50px;
+    }
+
+    .about {
+        font-size: 32px;
+    }
+}
+
+/* Mobile Devices */
+@media (max-width: 768px) {
+    /* Fixed Sign In Button on Small Devices */
+    .sign-in-btn {
+        position: fixed;
+        bottom: 90px;
+        right: 20px;
+        z-index: 9998;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    /* Show Burger Menu */
+    .burger-menu {
+        display: flex;
+    }
+
+    /* Hide navigation by default on mobile */
+    .main-nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 70%;
+        height: 100vh;
+        background-color: white;
+        box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+        transition: right 0.3s ease;
+        z-index: 1000;
+        padding-top: 60px;
+    }
+
+    .burger-toggle:checked ~ .main-nav {
+        right: 0;
+    }
+
+    .nav-header {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .nav-item {
+        border-left: none;
+        border-bottom: 1px solid #ddd;
+        padding: 15px 20px;
+        font-size: 18px;
+    }
+
+    .submenu {
+        position: static;
+        box-shadow: none;
+        border: none;
+        margin-top: 0;
+        padding-left: 20px;
+    }
+
+    .nav-item:focus-within .submenu {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    header {
+        flex-wrap: wrap;
+        padding: 15px 0;
+    }
+
+    .search-container {
+        order: 3;
+        width: 100%;
+        margin: 15px 20px;
+    }
+
+    .search-input:focus {
+        width: calc(100% - 40px);
+    }
+
+    .logo {
+        padding-left: 20px;
+        font-size: 24px;
+    }
+
+    .gallery {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .image-overlay-text {
+        font-size: 20px;
+        padding: 20px 30px;
+        width: 80%;
+    }
+
+    .hero h1 {
+        font-size: 32px;
+        padding: 0 20px;
+    }
+
+    .dates-section h3 {
+        font-size: 32px;
+    }
+
+    .dates-section h2 {
+        font-size: 18px;
+    }
+
+    .book-btn {
+        font-size: 22px;
+        padding: 15px 25px;
+    }
+
+    .about {
+        font-size: 24px;
+        padding: 20px;
+    }
+
+    .testimonials {
+        padding: 40px 20px;
+    }
+
+    .testimonials h2 {
+        font-size: 32px;
+    }
+
+    .testimonials-container {
+        grid-template-columns: 1fr;
+    }
+
+    .scroll-to-top {
+        bottom: 20px;
+        left: 20px;
+        width: 45px;
+        height: 45px;
+        font-size: 20px;
+    }
+
+    .footer-content {
+        text-align: center;
+    }
+
+    .title-divider{
+         margin: 0 auto;
+         margin-top: 19px;
+    }
+
+    .social-links {
+        justify-content: center;
+    }
+
+    .site-footer {
+        padding: 40px 20px;
+    }
+}
+
+/* Small Mobile Devices */
+@media (max-width: 480px) {
+    .logo {
+        font-size: 20px;
+    }
+
+    .hero h1 {
+        font-size: 24px;
+    }
+
+    .dates-section h3 {
+        font-size: 24px;
+    }
+
+    .gallery-section h3 {
+        font-size: 32px;
+    }
+
+    .view-gallery {
+        font-size: 24px;
+    }
+
+    .about {
+        font-size: 20px;
+    }
+
+    .modal-content {
+        padding: 25px;
+    }
+}
