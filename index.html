@@ -13,7 +13,6 @@
     <header id="header">
         <div class="logo">Shore Guesthouse</div>
         
-        <!-- Burger Menu Checkbox -->
         <input type="checkbox" id="burger-toggle" class="burger-toggle">
         <label for="burger-toggle" class="burger-menu" aria-label="Menu">
             <span></span>
@@ -24,10 +23,8 @@
         <div class="search-container">
             <input type="text" class="search-input" placeholder="Пошук...">
             <button class="search-btn">
-                <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                    viewBox="0 0 16 16">
-                    <path
-                        d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
                 </svg>
             </button>
         </div>
@@ -58,10 +55,10 @@
             </ul>
         </nav>
 
-        <!-- Fixed Sign In Button on Mobile -->
         <a href="#authModal" class="sign-in-btn">Sign In</a>
     </header>
 
+    <!-- AUTH MODAL (pure CSS :target) -->
     <div class="modal" id="authModal">
         <div class="modal-overlay"></div>
         <div class="modal-content">
@@ -82,7 +79,34 @@
         </div>
     </div>
 
-    <a href="#header" class="scroll-to-top">↑</a>
+    <!-- 1. КНОПКА "ВГОРУ" (замінює стару .scroll-to-top посилання) -->
+    <button id="scrollToTop" aria-label="Scroll to top">↑</button>
+
+    <!-- 2. БАНЕР ПІДПИСКИ -->
+    <div id="subscribeBanner" role="banner" aria-live="polite">
+        <p>🔔 Підпишіться на сповіщення від Shore Guesthouse — отримуйте ексклюзивні пропозиції та новини першими!</p>
+        <div class="banner-buttons">
+            <button class="banner-btn banner-btn-accept" id="subscribeBannerAccept">Підписатись</button>
+            <button class="banner-btn banner-btn-decline" id="subscribeBannerDecline">Не зараз</button>
+        </div>
+    </div>
+
+    <!-- Toast подяки -->
+    <div id="thankYouToast" aria-live="polite">🎉 Дякуємо, що приєдналися!</div>
+
+    <!-- 3. МОДАЛЬНА РЕКЛАМА -->
+    <div id="adModal" role="dialog" aria-modal="true" aria-labelledby="adModalTitle">
+        <div class="ad-modal-box">
+            <span class="ad-label">Реклама</span>
+            <h3 id="adModalTitle">Літо 2025 на Санторіні</h3>
+            <p>Забронюйте зараз і отримайте <strong>знижку 15%</strong> на проживання у вересні. Пропозиція обмежена!</p>
+            <a href="#" class="ad-modal-cta">Дізнатись більше</a>
+            <div class="ad-close-row">
+                <span class="ad-countdown-label">Закрити через <strong id="adCountdown">5</strong> сек…</span>
+                <button id="adCloseBtn" aria-label="Закрити рекламу">Закрити</button>
+            </div>
+        </div>
+    </div>
 
     <section class="hero">
         <h1 class="animate-fade-in">Where Comfort and Charm Meet the Aegean</h1>
@@ -150,11 +174,20 @@
             </div>
         </section>
 
+        <!-- 4. STICKY РЕКЛАМНИЙ БЛОК (з'являється при прокрутці до .dates-section) -->
         <section class="dates-section">
             <div class="dates-content">
                 <h2>Plan Your Dream Getaway:</h2>
                 <h3>Summer 2025 Dates Available</h3>
                 <button class="book-btn">Book now</button>
+            </div>
+
+            <div id="stickyAd" aria-label="Рекламний блок">
+                <button class="sticky-ad-close" id="stickyAdClose" aria-label="Закрити">&times;</button>
+                <p class="sticky-ad-badge">Спецпропозиція</p>
+                <h4>Рання бронь — знижка 15%</h4>
+                <p>Забронюйте до 30 червня та заощаджуйте на відпочинку вашої мрії.</p>
+                <a href="#" class="sticky-ad-btn">Забронювати</a>
             </div>
         </section>
     </main>
@@ -182,6 +215,9 @@
             </div>
         </div>
     </footer>
+
+    <!-- JavaScript підключається останнім -->
+    <script src="main.js"></script>
 </body>
 
 </html>
