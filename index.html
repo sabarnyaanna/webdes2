@@ -2,13 +2,147 @@
 <html lang="uk">
 
 <head>
-    <link rel="stylesheet" href="gallery.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shore Guesthouse - Santorini</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
+
+<!-- BOOKING MODAL -->
+<div class="modal" id="bookingModal">
+    <div class="modal-overlay"></div>
+    <div class="modal-content booking-modal-content">
+        <a href="#" class="close-modal">&times;</a>
+
+        <!-- STEP 1: Calendar -->
+        <div id="step-calendar">
+            <h2>Book Your Stay</h2>
+            <p class="booking-subtitle">Select your dates</p>
+            <div class="calendar-header">
+                <button class="cal-nav" onclick="prevMonth()">&#8592;</button>
+                <span id="cal-title"></span>
+                <button class="cal-nav" onclick="nextMonth()">&#8594;</button>
+            </div>
+            <div class="calendar-weekdays">
+                <span>Mo</span><span>Tu</span><span>We</span>
+                <span>Th</span><span>Fr</span><span>Sa</span><span>Su</span>
+            </div>
+            <div class="calendar-grid" id="calendar-grid"></div>
+            <div class="selected-dates" id="selected-dates-display"></div>
+            <button class="submit-btn" id="proceed-btn" onclick="goToForm()" disabled>Continue</button>
+        </div>
+
+        <!-- STEP 2: Form -->
+        <div id="step-form" style="display:none;">
+            <h2>Your Details</h2>
+            <p class="booking-subtitle" id="booking-dates-summary"></p>
+            <div class="form-group">
+                <label for="b-name">Full Name</label>
+                <input type="text" id="b-name" placeholder="John Doe" required>
+            </div>
+            <div class="form-group">
+                <label for="b-phone">Phone Number</label>
+                <input type="tel" id="b-phone" placeholder="+1 234 567 8900" required>
+            </div>
+            <div class="form-group">
+                <label for="b-guests">Number of Guests</label>
+                <input type="number" id="b-guests" placeholder="2" min="1" max="10" required>
+            </div>
+            <button class="submit-btn" onclick="submitBooking()">Confirm Booking</button>
+            <p class="form-footer"><a href="#" onclick="backToCalendar()">← Change dates</a></p>
+        </div>
+
+        <!-- STEP 3: Success -->
+        <div id="step-success" style="display:none; text-align:center; padding: 20px 0;">
+            <div class="success-icon">✓</div>
+            <h2>Booked!</h2>
+            <p class="booking-subtitle" id="success-summary"></p>
+        </div>
+    </div>
+</div>
+
+<div id="promoModal" style="
+    position:fixed; inset:0; z-index:9999;
+    background:rgba(0,0,0,0.55);
+    display:flex; align-items:center; justify-content:center;
+    opacity:0; pointer-events:none;
+    transition: opacity 0.3s ease;">
+    <div style="
+        background:#fff; border-radius:14px;
+        padding:40px 36px; max-width:420px; width:90%;
+        text-align:center; position:relative;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+        animation: adPop 0.35s cubic-bezier(0.34,1.56,0.64,1);">
+        <button onclick="closePromoModal()" style="
+            position:absolute; top:12px; right:16px;
+            background:none; border:none; font-size:24px;
+            color:#aaa; cursor:pointer;">&times;</button>
+        <div style="font-size:40px; margin-bottom:12px;">🎉</div>
+        <h3 style="font-size:22px; color:#1a1a2e; margin-bottom:10px;">Ваш промокод готовий!</h3>
+        <p style="font-size:14px; color:#666; margin-bottom:20px; line-height:1.6;">
+            Використайте цей код при бронюванні та отримайте <strong>знижку 15%</strong> на проживання.
+        </p>
+        <div id="promoCodeDisplay" style="
+            font-size:26px; font-weight:700; letter-spacing:4px;
+            color:#1a1a2e; background:#f5f5f5;
+            padding:16px 24px; border-radius:10px;
+            border:2px dashed #ccc; margin-bottom:16px;
+            cursor:pointer; transition: background 0.2s;"
+            onclick="copyPromo(this)"
+            title="Натисніть щоб скопіювати">
+        </div>
+        <p style="font-size:12px; color:#aaa; margin-bottom:24px;">Натисніть на код щоб скопіювати</p>
+        <button onclick="goToBookingWithPromo()" style="
+            width:100%; padding:14px;
+            background:#1a1a2e; color:#fff; border:none;
+            border-radius:30px; font-size:15px; font-weight:600;
+            cursor:pointer; transition:background 0.2s;">
+            Перейти до бронювання →
+        </button>
+    </div>
+</div>
+<div id="summerAdModal" style="
+    position:fixed; inset:0; z-index:9999;
+    background:rgba(0,0,0,0.55);
+    display:flex; align-items:center; justify-content:center;
+    opacity:0; pointer-events:none;
+    transition: opacity 0.3s ease;">
+    <div style="
+        background:#fff; border-radius:14px;
+        padding:40px 36px; max-width:460px; width:90%;
+        text-align:center; position:relative;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.25);">
+        <button onclick="closeSummerModal()" style="
+            position:absolute; top:12px; right:16px;
+            background:none; border:none; font-size:24px;
+            color:#aaa; cursor:pointer;">&times;</button>
+        <div style="font-size:44px; margin-bottom:14px;">🌊✨</div>
+        <h3 style="font-size:22px; color:#1a1a2e; margin-bottom:12px; line-height:1.4;">
+            Секретний промокод чекає на вас!
+        </h3>
+        <p style="font-size:15px; color:#555; line-height:1.7; margin-bottom:20px;">
+            На нашому сайті є <strong>спеціальна пропозиція</strong> — знижка <strong>15%</strong> на проживання.<br><br>
+            Прокрутіть сторінку донизу та знайдіть блок <em>«Спецпропозиція»</em> — там на вас чекає 
+            безкоштовний промокод. 🎁<br><br>
+            А щоб першими дізнаватись про нові акції — <strong>оформіть підписку</strong> і будьте в курсі всіх ексклюзивів!
+        </p>
+        <button onclick="closeSummerModal()" style="
+            width:100%; padding:14px;
+            background:#1a1a2e; color:#fff; border:none;
+            border-radius:30px; font-size:15px; font-weight:600;
+            cursor:pointer; margin-bottom:10px;">
+            Зрозуміло, шукаю промокод!
+        </button>
+        <button onclick="closeSummerModal(); setTimeout(()=>document.getElementById('subscribeBanner').classList.add('visible'), 300)" style="
+            width:100%; padding:12px;
+            background:transparent; color:#1a1a2e;
+            border:2px solid #1a1a2e; border-radius:30px;
+            font-size:14px; font-weight:600; cursor:pointer;">
+            Підписатись на акції 🔔
+        </button>
+    </div>
+</div>
 
 <body>
     <header id="header">
@@ -35,12 +169,12 @@
         <nav class="main-nav">
             <ul class="nav-header">
                 <li class="nav-item has-submenu">
-                    <a class="nav-link" href="gallery.html">Gallery</a>
+                    <a class="nav-link">Gallery</a>
                     <ul class="submenu">
-                        <li><a href="#">Bedrooms</a></li>
-                        <li><a href="#">Terraces</a></li>
-                        <li><a href="#">Sea View</a></li>
-                        <li><a href="#">Common Spaces</a></li>
+                        <li><a href="#Bedrooms">Bedrooms</a></li>
+                        <li><a href="#Terraces">Terraces</a></li>
+                        <li><a href="#Pools">Sea View</a></li>
+                        <li><a href="#CommonSpaces">Common Spaces</a></li>
                     </ul>
                 </li>
                 <li class="nav-item has-submenu">
@@ -48,11 +182,11 @@
                     <ul class="submenu">
                         <li><a href="#">About Us</a></li>
                         <li><a href="#Guest Reviews">Reviews</a></li>
-                        <li><a href="#">Contacts</a></li>
+                        <li><a href="#Contacts">Contacts</a></li>
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Book now</a>
+                    <a class="nav-link" href="#bookingModal">Book now</a>
                 </li>
             </ul>
         </nav>
@@ -96,7 +230,7 @@
             <h3 id="adModalTitle">Літо 2026 на Санторіні</h3>
             <p>Забронюйте зараз і отримайте <strong>знижку 15%</strong> на проживання у вересні. Пропозиція обмежена!
             </p>
-            <a href="#" class="ad-modal-cta">Дізнатись більше</a>
+            <a href="#" class="ad-modal-cta" id="adModalLearnBtn">Дізнатись більше</a>
             <div class="ad-close-row">
                 <span class="ad-countdown-label">Закрити через <strong id="adCountdown">5</strong> сек…</span>
                 <button id="adCloseBtn" aria-label="Закрити рекламу">Закрити</button>
@@ -112,25 +246,25 @@
         <section class="gallery-section">
             <h2 class="animate-slide-in">Gallery</h2>
             <h3 class="animate-slide-in">Experience Shore Guesthouse.</h3>
-            <a href="#" class="view-gallery">View full gallery</a>
+            <a href="gallery.html" class="view-gallery">View full gallery</a>
 
             <ul class="gallery">
-                <li class="image-overlay-container">
+                <li class="image-overlay-container" id="Bedrooms">
                     <img src="images/bedroom.svg" alt="bed">
                     <div class="image-overlay-text">Bedrooms</div>
                     <p>Sink into the plush comfort of the canopy bed.</p>
                 </li>
-                <li class="image-overlay-container">
+                <li class="image-overlay-container" id="Terraces">
                     <img src="images/terrace.svg" alt="terrace">
                     <div class="image-overlay-text">Terraces</div>
                     <p>Unwind in our terrace.</p>
                 </li>
-                <li class="image-overlay-container">
+                <li class="image-overlay-container" id="Pools">
                     <img src="images/pool.svg" alt="sea">
                     <div class="image-overlay-text">Sea View</div>
                     <p>Explore the open sea.</p>
                 </li>
-                <li class="image-overlay-container">
+                <li class="image-overlay-container" id="CommonSpaces">
                     <img src="images/door.jpg" alt="door">
                     <div class="image-overlay-text">Common space</div>
                     <p>A haven lies behind the blue door.</p>
@@ -184,7 +318,7 @@
                 <p class="sticky-ad-badge">Спецпропозиція</p>
                 <h4>Рання бронь — знижка 15%</h4>
                 <p>Забронюйте до 30 червня та заощаджуйте на відпочинку вашої мрії.</p>
-                <a href="#" class="sticky-ad-btn">Забронювати</a>
+                <a href="#" class="sticky-ad-btn" id="stickyAdBookBtn">Забронювати</a>
             </div>
         </section>
     </main>
@@ -199,10 +333,9 @@
                 <p>+38 067 121 89</p>
             </div>
 
-            <div class="footer__col">
+            <div class="footer__col" id="Contacts">
                 <h4>Information</h4>
                 <ul>
-                    <li><a href="#">Contact</a></li>
                     <li><a href="#">About us</a></li>
                     <li><a href="#Guest Reviews">Reviews</a></li>
                 </ul>
