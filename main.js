@@ -2,31 +2,24 @@
 // ТЕКСТИ (всі тексти сайту тут — редагуй в одному місці)
 // ═══════════════════════════════════════════════════════
 const TEXTS = {
-    // Банер підписки
     subscribe: {
         banner:  '🔔 Підпишіться на сповіщення від Shore Guesthouse — отримуйте ексклюзивні пропозиції та новини першими!',
         accept:  'Підписатись',
         decline: 'Не зараз',
         toast:   '🎉 Дякуємо, що приєдналися!',
     },
-
-    // Рекламна модалка "Літо"
     adModal: {
         label:  'Реклама',
         title:  'Літо 2026 на Санторіні',
         desc:   'Забронюйте зараз і отримайте знижку 15% на проживання у вересні. Пропозиція обмежена!',
         btnLearn: 'Дізнатись більше',
     },
-
-    // Sticky спецпропозиція
     stickyAd: {
         badge: 'Спецпропозиція',
         title: 'Рання бронь — знижка 15%',
         desc:  'Забронюйте до 30 червня та заощаджуйте на відпочинку вашої мрії.',
         btn:   'Отримати промокод',
     },
-
-    // Модалка промокоду
     promoModal: {
         icon:  '🎉',
         title: 'Ваш промокод готовий!',
@@ -34,8 +27,6 @@ const TEXTS = {
         hint:  'Натисніть на код щоб скопіювати',
         btn:   'Перейти до бронювання →',
     },
-
-    // Модалка "Літо" (після кліку "Дізнатись більше")
     summerModal: {
         icon:  '🌊✨',
         title: 'Секретний промокод чекає на вас!',
@@ -49,32 +40,27 @@ const TEXTS = {
 // ІНІЦІАЛІЗАЦІЯ ТЕКСТІВ
 // ═══════════════════════════════════════════════════════
 function initTexts() {
-    // Банер підписки
     document.getElementById('subscribe-banner-text').textContent     = TEXTS.subscribe.banner;
     document.getElementById('subscribeBannerAccept').textContent      = TEXTS.subscribe.accept;
     document.getElementById('subscribeBannerDecline').textContent     = TEXTS.subscribe.decline;
     document.getElementById('thankYouToast').textContent              = TEXTS.subscribe.toast;
 
-    // Рекламна модалка
     document.getElementById('ad-label-text').textContent             = TEXTS.adModal.label;
     document.getElementById('adModalTitle').textContent              = TEXTS.adModal.title;
     document.getElementById('ad-modal-desc').textContent             = TEXTS.adModal.desc;
     document.getElementById('adModalLearnBtn').textContent           = TEXTS.adModal.btnLearn;
 
-    // Sticky ad
     document.getElementById('sticky-ad-badge').textContent          = TEXTS.stickyAd.badge;
     document.getElementById('sticky-ad-title').textContent          = TEXTS.stickyAd.title;
     document.getElementById('sticky-ad-desc').textContent           = TEXTS.stickyAd.desc;
     document.getElementById('stickyAdBookBtn').textContent          = TEXTS.stickyAd.btn;
 
-    // Promo modal
     document.getElementById('promo-modal-icon').textContent         = TEXTS.promoModal.icon;
     document.getElementById('promo-modal-title').textContent        = TEXTS.promoModal.title;
     document.getElementById('promo-modal-desc').innerHTML           = TEXTS.promoModal.desc;
     document.getElementById('promo-modal-hint').textContent         = TEXTS.promoModal.hint;
     document.getElementById('promo-modal-btn').textContent          = TEXTS.promoModal.btn;
 
-    // Summer modal
     document.getElementById('summer-modal-icon').textContent        = TEXTS.summerModal.icon;
     document.getElementById('summer-modal-title').textContent       = TEXTS.summerModal.title;
     document.getElementById('summer-modal-desc').innerHTML          = TEXTS.summerModal.desc;
@@ -208,6 +194,83 @@ document.getElementById('summer-modal-btn2').addEventListener('click', () => {
 
 
 // ═══════════════════════════════════════════════════════
+// FOOTER INFO MODALS
+// ═══════════════════════════════════════════════════════
+function openFooterModal(type) {
+    const modal = document.getElementById('footerInfoModal');
+    const icon  = document.getElementById('footer-modal-icon');
+    const title = document.getElementById('footer-modal-title');
+    const body  = document.getElementById('footer-modal-body');
+
+    const content = {
+        gifts: {
+            icon: '🎁',
+            title: 'Подарунки та акції',
+            html: `
+                <p>Шукаєте щось особливе? Усі наші актуальні пропозиції, знижки та промокоди зібрані для вас у блоці <strong>«Спецпропозиція»</strong> — прокрутіть сторінку донизу, щоб знайти його.</p>
+                <br>
+                <p>Там ви зможете:</p>
+                <ul style="margin: 10px 0 0 20px; line-height:2; color:#555;">
+                    <li>✦ Отримати унікальний промокод зі знижкою <strong>15%</strong></li>
+                    <li>✦ Дізнатись про сезонні пропозиції</li>
+                    <li>✦ Підписатись на ексклюзивні новини</li>
+                </ul>
+                <br>
+                <p style="color:#888; font-size:13px;">Пропозиції оновлюються регулярно — заходьте частіше, щоб нічого не пропустити 🌟</p>
+            `
+        },
+        reservations: {
+            icon: '🗓️',
+            title: 'Як зробити бронювання',
+            html: `
+                <p>Забронювати номер у Shore Guesthouse дуже просто. Ось що потрібно зробити:</p>
+                <ol style="margin: 14px 0 0 20px; line-height:2.2; color:#555;">
+                    <li><strong>Оберіть дати</strong> заїзду та виїзду в нашому календарі.</li>
+                    <li><strong>Вкажіть ваші дані:</strong> ім'я, номер телефону, email та кількість гостей.</li>
+                    <li><strong>Застосуйте промокод</strong> (якщо є) — знижка зарахується автоматично.</li>
+                    <li><strong>Підтвердіть бронювання</strong> — і все готово!</li>
+                </ol>
+                <br>
+                <p>Після підтвердження всі деталі вашого бронювання <strong>надійдуть на вашу електронну пошту</strong> протягом кількох хвилин.</p>
+                <br>
+                <p style="color:#888; font-size:13px;">Маєте питання? Пишіть нам: <a href="mailto:info@shoreguesthouse.com.ua" style="color:#1a1a2e;">info@shoreguesthouse.com.ua</a></p>
+            `
+        },
+        returns: {
+            icon: '↩️',
+            title: 'Політика скасування',
+            html: `
+                <p>Ми розуміємо, що плани можуть змінюватись. Ось наші умови скасування бронювання:</p>
+                <br>
+                <div style="background:#f9f9f9; border-left:3px solid #2d6a4f; padding:14px 18px; border-radius:4px; margin-bottom:14px;">
+                    <strong style="color:#2d6a4f;">✓ За 2 і більше днів до заїзду</strong>
+                    <p style="margin-top:6px; color:#555; font-size:14px;">Скасування безкоштовне. Ми повернемо передплату у повному обсязі — щоб інші гості встигли забронювати цей номер.</p>
+                </div>
+                <div style="background:#fff5f5; border-left:3px solid #c0392b; padding:14px 18px; border-radius:4px;">
+                    <strong style="color:#c0392b;">✗ Менш ніж за 2 дні до заїзду</strong>
+                    <p style="margin-top:6px; color:#555; font-size:14px;">На жаль, у цьому випадку передплата <strong>не повертається</strong> — оскільки у нас залишається недостатньо часу для повторного бронювання.</p>
+                </div>
+                <br>
+                <p style="color:#888; font-size:13px;">Для скасування зверніться до нас за адресою: <a href="mailto:info@shoreguesthouse.com.ua" style="color:#1a1a2e;">info@shoreguesthouse.com.ua</a></p>
+            `
+        }
+    };
+
+    const c = content[type];
+    icon.textContent   = c.icon;
+    title.textContent  = c.title;
+    body.innerHTML     = c.html;
+    openModal('footerInfoModal');
+}
+
+function closeFooterModal() { closeModal('footerInfoModal'); }
+
+document.getElementById('footerInfoModal').addEventListener('click', function(e) {
+    if (e.target === this) closeFooterModal();
+});
+
+
+// ═══════════════════════════════════════════════════════
 // BOOKING SYSTEM
 // ═══════════════════════════════════════════════════════
 const bookedDates = [
@@ -218,6 +281,8 @@ const bookedDates = [
 
 const bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
 let activePromoCodes = JSON.parse(localStorage.getItem('promoCodes') || '[]');
+// Track which promo code was just generated (for one-time use in booking flow)
+let pendingPromoCode = null;
 
 let calYear, calMonth;
 let selectedStart = null;
@@ -241,7 +306,6 @@ function openBookingModal() {
 
 function closeBookingModal() { closeModal('bookingModal'); }
 
-// Всі кнопки "Book now"
 document.getElementById('bookNowBtn').addEventListener('click', (e) => { e.preventDefault(); openBookingModal(); });
 document.getElementById('bookBtnSection').addEventListener('click', openBookingModal);
 document.getElementById('bookingClose').addEventListener('click', closeBookingModal);
@@ -287,8 +351,8 @@ function renderCalendar() {
         }
 
         if (selectedStart && selectedEnd) {
-            if (dateStr === toDateStr(selectedStart))           btn.classList.add('selected','range-start');
-            else if (dateStr === toDateStr(selectedEnd))        btn.classList.add('selected','range-end');
+            if (dateStr === toDateStr(selectedStart))            btn.classList.add('selected','range-start');
+            else if (dateStr === toDateStr(selectedEnd))         btn.classList.add('selected','range-end');
             else if (date > selectedStart && date < selectedEnd) btn.classList.add('in-range');
         } else if (selectedStart && dateStr === toDateStr(selectedStart)) {
             btn.classList.add('selected');
@@ -353,17 +417,35 @@ function submitBooking() {
 
     const name   = document.getElementById('b-name').value.trim();
     const phone  = document.getElementById('b-phone').value.trim();
+    const email  = document.getElementById('b-email').value.trim();
     const guests = document.getElementById('b-guests').value.trim();
     const promo  = (document.getElementById('b-promo')?.value || '').trim().toUpperCase();
-    const hasDiscount = promo && activePromoCodes.includes(promo);
+
+    // One-time promo: only valid if it's the pending code set via goToBookingWithPromo
+    const hasDiscount = promo && pendingPromoCode && promo === pendingPromoCode;
 
     if (!name)   { alert("Введіть ваше ім'я."); return; }
     if (!phone)  { alert('Введіть номер телефону.'); return; }
+    if (!email)  { alert('Введіть email адресу.'); return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { alert('Введіть коректний email.'); return; }
     if (!guests) { alert('Введіть кількість гостей.'); return; }
     if (!/^\+?[\d\s\-()]{7,}$/.test(phone)) { alert('Введіть коректний номер телефону.'); return; }
 
-    const booking = { name, phone, guests, promo: promo||null, discount: hasDiscount?'15%':null,
-        checkIn: toDateStr(selectedStart), checkOut: toDateStr(selectedEnd), bookedAt: new Date().toISOString() };
+    // Mark promo as used — remove from active list
+    if (hasDiscount) {
+        activePromoCodes = activePromoCodes.filter(c => c !== pendingPromoCode);
+        localStorage.setItem('promoCodes', JSON.stringify(activePromoCodes));
+        pendingPromoCode = null;
+    }
+
+    const booking = {
+        name, phone, email, guests,
+        promo: promo || null,
+        discount: hasDiscount ? '15%' : null,
+        checkIn: toDateStr(selectedStart),
+        checkOut: toDateStr(selectedEnd),
+        bookedAt: new Date().toISOString()
+    };
 
     bookings.push(booking);
     localStorage.setItem('bookings', JSON.stringify(bookings));
@@ -379,7 +461,8 @@ function submitBooking() {
     document.getElementById('step-success').style.display = 'block';
     document.getElementById('success-summary').innerHTML  =
         `${name}, ваше бронювання з ${formatDate(selectedStart)} по ${formatDate(selectedEnd)} підтверджено!` +
-        (hasDiscount ? `<br><span style="color:#2d6a4f;font-weight:600;display:block;margin-top:8px;">✓ Знижка 15% застосована!</span>` : '');
+        (hasDiscount ? `<br><span style="color:#2d6a4f;font-weight:600;display:block;margin-top:8px;">✓ Знижку 15% застосовано!</span>` : '') +
+        `<br><span style="font-size:13px; color:#888;">Деталі надіслано на ${email}</span>`;
 
     console.log('Бронювання:', bookings);
 }
@@ -400,6 +483,8 @@ function generatePromoCode() {
 
 function openPromoModal() {
     const code = generatePromoCode();
+    // Store as pending — will be added to activePromoCodes only when used
+    pendingPromoCode = code;
     activePromoCodes.push(code);
     localStorage.setItem('promoCodes', JSON.stringify(activePromoCodes));
     document.getElementById('promoCodeDisplay').textContent = code;
@@ -419,14 +504,14 @@ function goToBookingWithPromo() {
     closePromoModal();
     stickyAd.style.display = 'none';
     openBookingModal();
-    // Вставляємо промокод після відкриття форми
+    // Insert promo code after opening the form — code is valid only once
     setTimeout(() => {
         goToForm();
         setTimeout(() => {
             const inp = document.getElementById('b-promo');
             const st  = document.getElementById('promo-status');
             if (inp && code) {
-                inp.value            = code;
+                inp.value             = code;
                 inp.style.borderColor = '#2d6a4f';
                 if (st) { st.textContent = '✓ -15%'; st.style.color = '#2d6a4f'; }
             }
@@ -436,7 +521,7 @@ function goToBookingWithPromo() {
 
 
 // ═══════════════════════════════════════════════════════
-// ВАЛІДАЦІЯ ПРОМОКОДУ
+// ВАЛІДАЦІЯ ПРОМОКОДУ (one-time: тільки pendingPromoCode)
 // ═══════════════════════════════════════════════════════
 function initPromoValidation() {
     const inp = document.getElementById('b-promo');
@@ -447,7 +532,7 @@ function initPromoValidation() {
         this.value = val;
         if (!val) {
             st.textContent = ''; this.style.borderColor = '#ddd';
-        } else if (activePromoCodes.includes(val)) {
+        } else if (pendingPromoCode && val === pendingPromoCode) {
             st.textContent = '✓ -15%'; st.style.color = '#2d6a4f'; this.style.borderColor = '#2d6a4f';
         } else {
             st.textContent = '✗ Невірний'; st.style.color = '#c0392b'; this.style.borderColor = '#e74c3c';

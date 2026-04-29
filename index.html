@@ -124,6 +124,10 @@
                     <input type="tel" id="b-phone" placeholder="+380 67 123 4567">
                 </div>
                 <div class="form-group">
+                    <label for="b-email">Email</label>
+                    <input type="email" id="b-email" placeholder="your@email.com">
+                </div>
+                <div class="form-group">
                     <label for="b-guests">Number of Guests</label>
                     <input type="number" id="b-guests" placeholder="2" min="1" max="10">
                 </div>
@@ -178,6 +182,15 @@
                 onclick="copyPromo(this)"
                 title="Натисніть щоб скопіювати"></div>
             <p id="promo-modal-hint" style="font-size:12px; color:#aaa; margin-bottom:24px;"></p>
+            <!-- Email field in promo modal -->
+            <div style="margin-bottom:16px; text-align:left;">
+                <label style="font-size:12px; color:#888; display:block; margin-bottom:6px;">Email для підтвердження (необов'язково)</label>
+                <input type="email" id="promo-email" placeholder="your@email.com" style="
+                    width:100%; padding:10px 14px;
+                    border:2px solid #ddd; border-radius:8px;
+                    font-size:14px; outline:none;
+                    transition:border-color 0.2s;">
+            </div>
             <button onclick="goToBookingWithPromo()" style="
                 width:100%; padding:14px;
                 background:#1a1a2e; color:#fff; border:none;
@@ -215,6 +228,29 @@
                 background:transparent; color:#1a1a2e;
                 border:2px solid #1a1a2e; border-radius:30px;
                 font-size:14px; font-weight:600; cursor:pointer;"></button>
+        </div>
+    </div>
+
+    <!-- FOOTER INFO MODAL (Gifts / Reservations / Returns) -->
+    <div id="footerInfoModal" style="
+        position:fixed; inset:0; z-index:9999;
+        background:rgba(0,0,0,0.55);
+        display:flex; align-items:center; justify-content:center;
+        opacity:0; pointer-events:none;
+        transition:opacity 0.3s ease;">
+        <div style="
+            background:#fff; border-radius:14px;
+            padding:40px 36px; max-width:500px; width:92%;
+            position:relative;
+            box-shadow:0 20px 60px rgba(0,0,0,0.25);
+            max-height:85vh; overflow-y:auto;">
+            <button onclick="closeFooterModal()" style="
+                position:absolute; top:12px; right:16px;
+                background:none; border:none; font-size:24px;
+                color:#aaa; cursor:pointer; z-index:1;">&times;</button>
+            <div id="footer-modal-icon" style="font-size:40px; margin-bottom:12px;"></div>
+            <h3 id="footer-modal-title" style="font-size:22px; color:#1a1a2e; margin-bottom:16px;"></h3>
+            <div id="footer-modal-body" style="font-size:15px; color:#444; line-height:1.7;"></div>
         </div>
     </div>
 
@@ -337,9 +373,9 @@
             <div class="footer__col">
                 <h4>Services</h4>
                 <ul>
-                    <li><a href="#">Gifts &amp; promotions</a></li>
-                    <li><a href="#">Reservations</a></li>
-                    <li><a href="#">Returns</a></li>
+                    <li><a href="#" onclick="openFooterModal('gifts'); return false;">Gifts &amp; promotions</a></li>
+                    <li><a href="#" onclick="openFooterModal('reservations'); return false;">Reservations</a></li>
+                    <li><a href="#" onclick="openFooterModal('returns'); return false;">Returns</a></li>
                 </ul>
             </div>
             <div class="footer__col">
