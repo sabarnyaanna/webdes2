@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="uk">
-
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <meta charset="UTF-8">
@@ -8,160 +7,21 @@
     <title>Shore Guesthouse - Santorini</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
-
-<!-- BOOKING MODAL -->
-<div class="modal" id="bookingModal">
-    <div class="modal-overlay"></div>
-    <div class="modal-content booking-modal-content">
-        <a href="#" class="close-modal">&times;</a>
-
-        <!-- STEP 1: Calendar -->
-        <div id="step-calendar">
-            <h2>Book Your Stay</h2>
-            <p class="booking-subtitle">Select your dates</p>
-            <div class="calendar-header">
-                <button class="cal-nav" onclick="prevMonth()">&#8592;</button>
-                <span id="cal-title"></span>
-                <button class="cal-nav" onclick="nextMonth()">&#8594;</button>
-            </div>
-            <div class="calendar-weekdays">
-                <span>Mo</span><span>Tu</span><span>We</span>
-                <span>Th</span><span>Fr</span><span>Sa</span><span>Su</span>
-            </div>
-            <div class="calendar-grid" id="calendar-grid"></div>
-            <div class="selected-dates" id="selected-dates-display"></div>
-            <button class="submit-btn" id="proceed-btn" onclick="goToForm()" disabled>Continue</button>
-        </div>
-
-        <!-- STEP 2: Form -->
-        <div id="step-form" style="display:none;">
-            <h2>Your Details</h2>
-            <p class="booking-subtitle" id="booking-dates-summary"></p>
-            <div class="form-group">
-                <label for="b-name">Full Name</label>
-                <input type="text" id="b-name" placeholder="John Doe" required>
-            </div>
-            <div class="form-group">
-                <label for="b-phone">Phone Number</label>
-                <input type="tel" id="b-phone" placeholder="+1 234 567 8900" required>
-            </div>
-            <div class="form-group">
-                <label for="b-guests">Number of Guests</label>
-                <input type="number" id="b-guests" placeholder="2" min="1" max="10" required>
-            </div>
-            <button class="submit-btn" onclick="submitBooking()">Confirm Booking</button>
-            <p class="form-footer"><a href="#" onclick="backToCalendar()">← Change dates</a></p>
-        </div>
-
-        <!-- STEP 3: Success -->
-        <div id="step-success" style="display:none; text-align:center; padding: 20px 0;">
-            <div class="success-icon">✓</div>
-            <h2>Booked!</h2>
-            <p class="booking-subtitle" id="success-summary"></p>
-        </div>
-    </div>
-</div>
-
-<div id="promoModal" style="
-    position:fixed; inset:0; z-index:9999;
-    background:rgba(0,0,0,0.55);
-    display:flex; align-items:center; justify-content:center;
-    opacity:0; pointer-events:none;
-    transition: opacity 0.3s ease;">
-    <div style="
-        background:#fff; border-radius:14px;
-        padding:40px 36px; max-width:420px; width:90%;
-        text-align:center; position:relative;
-        box-shadow: 0 20px 60px rgba(0,0,0,0.25);
-        animation: adPop 0.35s cubic-bezier(0.34,1.56,0.64,1);">
-        <button onclick="closePromoModal()" style="
-            position:absolute; top:12px; right:16px;
-            background:none; border:none; font-size:24px;
-            color:#aaa; cursor:pointer;">&times;</button>
-        <div style="font-size:40px; margin-bottom:12px;">🎉</div>
-        <h3 style="font-size:22px; color:#1a1a2e; margin-bottom:10px;">Ваш промокод готовий!</h3>
-        <p style="font-size:14px; color:#666; margin-bottom:20px; line-height:1.6;">
-            Використайте цей код при бронюванні та отримайте <strong>знижку 15%</strong> на проживання.
-        </p>
-        <div id="promoCodeDisplay" style="
-            font-size:26px; font-weight:700; letter-spacing:4px;
-            color:#1a1a2e; background:#f5f5f5;
-            padding:16px 24px; border-radius:10px;
-            border:2px dashed #ccc; margin-bottom:16px;
-            cursor:pointer; transition: background 0.2s;"
-            onclick="copyPromo(this)"
-            title="Натисніть щоб скопіювати">
-        </div>
-        <p style="font-size:12px; color:#aaa; margin-bottom:24px;">Натисніть на код щоб скопіювати</p>
-        <button onclick="goToBookingWithPromo()" style="
-            width:100%; padding:14px;
-            background:#1a1a2e; color:#fff; border:none;
-            border-radius:30px; font-size:15px; font-weight:600;
-            cursor:pointer; transition:background 0.2s;">
-            Перейти до бронювання →
-        </button>
-    </div>
-</div>
-<div id="summerAdModal" style="
-    position:fixed; inset:0; z-index:9999;
-    background:rgba(0,0,0,0.55);
-    display:flex; align-items:center; justify-content:center;
-    opacity:0; pointer-events:none;
-    transition: opacity 0.3s ease;">
-    <div style="
-        background:#fff; border-radius:14px;
-        padding:40px 36px; max-width:460px; width:90%;
-        text-align:center; position:relative;
-        box-shadow: 0 20px 60px rgba(0,0,0,0.25);">
-        <button onclick="closeSummerModal()" style="
-            position:absolute; top:12px; right:16px;
-            background:none; border:none; font-size:24px;
-            color:#aaa; cursor:pointer;">&times;</button>
-        <div style="font-size:44px; margin-bottom:14px;">🌊✨</div>
-        <h3 style="font-size:22px; color:#1a1a2e; margin-bottom:12px; line-height:1.4;">
-            Секретний промокод чекає на вас!
-        </h3>
-        <p style="font-size:15px; color:#555; line-height:1.7; margin-bottom:20px;">
-            На нашому сайті є <strong>спеціальна пропозиція</strong> — знижка <strong>15%</strong> на проживання.<br><br>
-            Прокрутіть сторінку донизу та знайдіть блок <em>«Спецпропозиція»</em> — там на вас чекає 
-            безкоштовний промокод. 🎁<br><br>
-            А щоб першими дізнаватись про нові акції — <strong>оформіть підписку</strong> і будьте в курсі всіх ексклюзивів!
-        </p>
-        <button onclick="closeSummerModal()" style="
-            width:100%; padding:14px;
-            background:#1a1a2e; color:#fff; border:none;
-            border-radius:30px; font-size:15px; font-weight:600;
-            cursor:pointer; margin-bottom:10px;">
-            Зрозуміло, шукаю промокод!
-        </button>
-        <button onclick="closeSummerModal(); setTimeout(()=>document.getElementById('subscribeBanner').classList.add('visible'), 300)" style="
-            width:100%; padding:12px;
-            background:transparent; color:#1a1a2e;
-            border:2px solid #1a1a2e; border-radius:30px;
-            font-size:14px; font-weight:600; cursor:pointer;">
-            Підписатись на акції 🔔
-        </button>
-    </div>
-</div>
-
 <body>
+
     <header id="header">
         <div class="logo">Shore Guesthouse</div>
 
         <input type="checkbox" id="burger-toggle" class="burger-toggle">
         <label for="burger-toggle" class="burger-menu" aria-label="Menu">
-            <span></span>
-            <span></span>
-            <span></span>
+            <span></span><span></span><span></span>
         </label>
 
         <div class="search-container">
             <input type="text" class="search-input" placeholder="Пошук...">
             <button class="search-btn">
-                <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                    viewBox="0 0 16 16">
-                    <path
-                        d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
                 </svg>
             </button>
         </div>
@@ -186,7 +46,7 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#bookingModal">Book now</a>
+                    <a class="nav-link" id="bookNowBtn" href="#">Book now</a>
                 </li>
             </ul>
         </nav>
@@ -194,6 +54,7 @@
         <a href="#authModal" class="sign-in-btn">Sign In</a>
     </header>
 
+    <!-- AUTH MODAL -->
     <div class="modal" id="authModal">
         <div class="modal-overlay"></div>
         <div class="modal-content">
@@ -213,24 +74,168 @@
             </form>
         </div>
     </div>
-    <button id="scrollToTop" aria-label="Scroll to top">↑</button>
 
-    <div id="subscribeBanner" role="banner" aria-live="polite">
-        <p>🔔 Підпишіться на сповіщення від Shore Guesthouse — отримуйте ексклюзивні пропозиції та новини першими!</p>
-        <div class="banner-buttons">
-            <button class="banner-btn banner-btn-accept" id="subscribeBannerAccept">Підписатись</button>
-            <button class="banner-btn banner-btn-decline" id="subscribeBannerDecline">Не зараз</button>
+    <!-- BOOKING MODAL -->
+    <div id="bookingModal" class="modal-overlay-custom" style="
+        position:fixed; inset:0; z-index:3000;
+        background:rgba(0,0,0,0.5);
+        display:flex; align-items:center; justify-content:center;
+        opacity:0; pointer-events:none;
+        transition:opacity 0.3s ease;">
+        <div style="
+            background:#fff; border-radius:10px;
+            padding:40px; width:90%; max-width:460px;
+            position:relative; max-height:90vh; overflow-y:auto;
+            animation:slideUp 0.3s ease;">
+
+            <button id="bookingClose" style="
+                position:absolute; top:14px; right:18px;
+                background:none; border:none; font-size:28px;
+                color:#888; cursor:pointer; line-height:1;">&times;</button>
+
+            <!-- STEP 1: Calendar -->
+            <div id="step-calendar">
+                <h2 style="font-size:24px; margin-bottom:6px;">Book Your Stay</h2>
+                <p class="booking-subtitle" id="cal-subtitle">Select your dates</p>
+                <div class="calendar-header">
+                    <button class="cal-nav" type="button" onclick="prevMonth()">&#8592;</button>
+                    <span id="cal-title"></span>
+                    <button class="cal-nav" type="button" onclick="nextMonth()">&#8594;</button>
+                </div>
+                <div class="calendar-weekdays">
+                    <span>Mo</span><span>Tu</span><span>We</span>
+                    <span>Th</span><span>Fr</span><span>Sa</span><span>Su</span>
+                </div>
+                <div class="calendar-grid" id="calendar-grid"></div>
+                <div class="selected-dates" id="selected-dates-display"></div>
+                <button class="submit-btn" id="proceed-btn" type="button" onclick="goToForm()" disabled>Continue</button>
+            </div>
+
+            <!-- STEP 2: Form -->
+            <div id="step-form" style="display:none;">
+                <h2 style="font-size:24px; margin-bottom:6px;">Your Details</h2>
+                <p class="booking-subtitle" id="booking-dates-summary"></p>
+                <div class="form-group">
+                    <label for="b-name">Full Name</label>
+                    <input type="text" id="b-name" placeholder="John Doe">
+                </div>
+                <div class="form-group">
+                    <label for="b-phone">Phone Number</label>
+                    <input type="tel" id="b-phone" placeholder="+380 67 123 4567">
+                </div>
+                <div class="form-group">
+                    <label for="b-guests">Number of Guests</label>
+                    <input type="number" id="b-guests" placeholder="2" min="1" max="10">
+                </div>
+                <div class="form-group">
+                    <label for="b-promo">Promo Code <span style="color:#aaa; font-weight:400; font-size:12px;">(optional)</span></label>
+                    <div style="position:relative;">
+                        <input type="text" id="b-promo" placeholder="SHORE-XXXX" style="text-transform:uppercase; letter-spacing:2px; padding-right:80px;">
+                        <span id="promo-status" style="
+                            position:absolute; right:12px; top:50%;
+                            transform:translateY(-50%);
+                            font-size:12px; font-weight:600;"></span>
+                    </div>
+                </div>
+                <button class="submit-btn" type="button" onclick="submitBooking()">Confirm Booking</button>
+                <p class="form-footer"><a href="#" onclick="backToCalendar(); return false;">← Change dates</a></p>
+            </div>
+
+            <!-- STEP 3: Success -->
+            <div id="step-success" style="display:none; text-align:center; padding:20px 0;">
+                <div class="success-icon">✓</div>
+                <h2>Booked!</h2>
+                <p class="booking-subtitle" id="success-summary"></p>
+            </div>
         </div>
     </div>
 
-    <div id="thankYouToast" aria-live="polite">🎉 Дякуємо, що приєдналися!</div>
+    <!-- PROMO MODAL -->
+    <div id="promoModal" style="
+        position:fixed; inset:0; z-index:9999;
+        background:rgba(0,0,0,0.55);
+        display:flex; align-items:center; justify-content:center;
+        opacity:0; pointer-events:none;
+        transition:opacity 0.3s ease;">
+        <div style="
+            background:#fff; border-radius:14px;
+            padding:40px 36px; max-width:420px; width:90%;
+            text-align:center; position:relative;
+            box-shadow:0 20px 60px rgba(0,0,0,0.25);">
+            <button onclick="closePromoModal()" style="
+                position:absolute; top:12px; right:16px;
+                background:none; border:none; font-size:24px;
+                color:#aaa; cursor:pointer;">&times;</button>
+            <div id="promo-modal-icon" style="font-size:40px; margin-bottom:12px;"></div>
+            <h3 id="promo-modal-title" style="font-size:22px; color:#1a1a2e; margin-bottom:10px;"></h3>
+            <p id="promo-modal-desc" style="font-size:14px; color:#666; margin-bottom:20px; line-height:1.6;"></p>
+            <div id="promoCodeDisplay" style="
+                font-size:26px; font-weight:700; letter-spacing:4px;
+                color:#1a1a2e; background:#f5f5f5;
+                padding:16px 24px; border-radius:10px;
+                border:2px dashed #ccc; margin-bottom:16px;
+                cursor:pointer; transition:background 0.2s;"
+                onclick="copyPromo(this)"
+                title="Натисніть щоб скопіювати"></div>
+            <p id="promo-modal-hint" style="font-size:12px; color:#aaa; margin-bottom:24px;"></p>
+            <button onclick="goToBookingWithPromo()" style="
+                width:100%; padding:14px;
+                background:#1a1a2e; color:#fff; border:none;
+                border-radius:30px; font-size:15px; font-weight:600;
+                cursor:pointer;" id="promo-modal-btn"></button>
+        </div>
+    </div>
+
+    <!-- SUMMER AD MODAL -->
+    <div id="summerAdModal" style="
+        position:fixed; inset:0; z-index:9999;
+        background:rgba(0,0,0,0.55);
+        display:flex; align-items:center; justify-content:center;
+        opacity:0; pointer-events:none;
+        transition:opacity 0.3s ease;">
+        <div style="
+            background:#fff; border-radius:14px;
+            padding:40px 36px; max-width:460px; width:90%;
+            text-align:center; position:relative;
+            box-shadow:0 20px 60px rgba(0,0,0,0.25);">
+            <button onclick="closeSummerModal()" style="
+                position:absolute; top:12px; right:16px;
+                background:none; border:none; font-size:24px;
+                color:#aaa; cursor:pointer;">&times;</button>
+            <div id="summer-modal-icon" style="font-size:44px; margin-bottom:14px;"></div>
+            <h3 id="summer-modal-title" style="font-size:22px; color:#1a1a2e; margin-bottom:12px; line-height:1.4;"></h3>
+            <p id="summer-modal-desc" style="font-size:15px; color:#555; line-height:1.7; margin-bottom:20px;"></p>
+            <button id="summer-modal-btn1" onclick="closeSummerModal()" style="
+                width:100%; padding:14px;
+                background:#1a1a2e; color:#fff; border:none;
+                border-radius:30px; font-size:15px; font-weight:600;
+                cursor:pointer; margin-bottom:10px;"></button>
+            <button id="summer-modal-btn2" style="
+                width:100%; padding:12px;
+                background:transparent; color:#1a1a2e;
+                border:2px solid #1a1a2e; border-radius:30px;
+                font-size:14px; font-weight:600; cursor:pointer;"></button>
+        </div>
+    </div>
+
+    <button id="scrollToTop" aria-label="Scroll to top">↑</button>
+
+    <div id="subscribeBanner" role="banner" aria-live="polite">
+        <p id="subscribe-banner-text"></p>
+        <div class="banner-buttons">
+            <button class="banner-btn banner-btn-accept" id="subscribeBannerAccept"></button>
+            <button class="banner-btn banner-btn-decline" id="subscribeBannerDecline"></button>
+        </div>
+    </div>
+
+    <div id="thankYouToast" aria-live="polite"></div>
+
     <div id="adModal" role="dialog" aria-modal="true" aria-labelledby="adModalTitle">
         <div class="ad-modal-box">
-            <span class="ad-label">Реклама</span>
-            <h3 id="adModalTitle">Літо 2026 на Санторіні</h3>
-            <p>Забронюйте зараз і отримайте <strong>знижку 15%</strong> на проживання у вересні. Пропозиція обмежена!
-            </p>
-            <a href="#" class="ad-modal-cta" id="adModalLearnBtn">Дізнатись більше</a>
+            <span class="ad-label" id="ad-label-text"></span>
+            <h3 id="adModalTitle"></h3>
+            <p id="ad-modal-desc"></p>
+            <a href="#" class="ad-modal-cta" id="adModalLearnBtn"></a>
             <div class="ad-close-row">
                 <span class="ad-countdown-label">Закрити через <strong id="adCountdown">5</strong> сек…</span>
                 <button id="adCloseBtn" aria-label="Закрити рекламу">Закрити</button>
@@ -247,7 +252,6 @@
             <h2 class="animate-slide-in">Gallery</h2>
             <h3 class="animate-slide-in">Experience Shore Guesthouse.</h3>
             <a href="gallery.html" class="view-gallery">View full gallery</a>
-
             <ul class="gallery">
                 <li class="image-overlay-container" id="Bedrooms">
                     <img src="images/bedroom.svg" alt="bed">
@@ -274,13 +278,8 @@
 
         <section class="about">
             <h2>About</h2>
-            <p>
-                Tucked into the rugged cliffs of Santorini, the Shore Guesthouse offers a retreat with uninterrupted
-                views of the caldera.</p>
-            <p>
-                <a href="#" class="read-story">Read our story</a> to learn the history behind Shore Guesthouse and the
-                beauty of Santorini.
-            </p>
+            <p>Tucked into the rugged cliffs of Santorini, the Shore Guesthouse offers a retreat with uninterrupted views of the caldera.</p>
+            <p><a href="#" class="read-story">Read our story</a> to learn the history behind Shore Guesthouse and the beauty of Santorini.</p>
         </section>
 
         <section class="testimonials" id="Guest Reviews">
@@ -288,51 +287,46 @@
             <div class="testimonials-container">
                 <div class="testimonial-card">
                     <div class="stars">★★★★★</div>
-                    <p class="testimonial-text">"An absolutely magical experience! The views are breathtaking and the
-                        hospitality is unmatched."</p>
+                    <p class="testimonial-text">"An absolutely magical experience! The views are breathtaking and the hospitality is unmatched."</p>
                     <p class="testimonial-author">— Sarah M., UK</p>
                 </div>
                 <div class="testimonial-card">
                     <div class="stars">★★★★★</div>
-                    <p class="testimonial-text">"The perfect romantic getaway. Every detail was thoughtfully designed
-                        for comfort and beauty."</p>
+                    <p class="testimonial-text">"The perfect romantic getaway. Every detail was thoughtfully designed for comfort and beauty."</p>
                     <p class="testimonial-author">— Marco & Elena, Italy</p>
                 </div>
                 <div class="testimonial-card">
                     <div class="stars">★★★★★</div>
-                    <p class="testimonial-text">"Outstanding service and incredible sunsets. We'll definitely be coming
-                        back!"</p>
+                    <p class="testimonial-text">"Outstanding service and incredible sunsets. We'll definitely be coming back!"</p>
                     <p class="testimonial-author">— David L., USA</p>
                 </div>
             </div>
         </section>
+
         <section class="dates-section">
             <div class="dates-content">
                 <h2>Plan Your Dream Getaway:</h2>
                 <h3>Summer 2025 Dates Available</h3>
-                <button class="book-btn">Book now</button>
+                <button class="book-btn" id="bookBtnSection">Book now</button>
             </div>
-
             <div id="stickyAd" aria-label="Рекламний блок">
                 <button class="sticky-ad-close" id="stickyAdClose" aria-label="Закрити">&times;</button>
-                <p class="sticky-ad-badge">Спецпропозиція</p>
-                <h4>Рання бронь — знижка 15%</h4>
-                <p>Забронюйте до 30 червня та заощаджуйте на відпочинку вашої мрії.</p>
-                <a href="#" class="sticky-ad-btn" id="stickyAdBookBtn">Забронювати</a>
+                <p class="sticky-ad-badge" id="sticky-ad-badge"></p>
+                <h4 id="sticky-ad-title"></h4>
+                <p id="sticky-ad-desc"></p>
+                <a href="#" class="sticky-ad-btn" id="stickyAdBookBtn"></a>
             </div>
         </section>
     </main>
 
     <footer class="footer">
         <div class="footer__grid">
-
             <div class="footer__brand">
                 <h2>Shore Guesthouse</h2>
                 <div class="divider"></div>
                 <p>info@shoreguesthouse.com.ua</p>
                 <p>+38 067 121 89</p>
             </div>
-
             <div class="footer__col" id="Contacts">
                 <h4>Information</h4>
                 <ul>
@@ -340,7 +334,6 @@
                     <li><a href="#Guest Reviews">Reviews</a></li>
                 </ul>
             </div>
-
             <div class="footer__col">
                 <h4>Services</h4>
                 <ul>
@@ -349,42 +342,26 @@
                     <li><a href="#">Returns</a></li>
                 </ul>
             </div>
-
             <div class="footer__col">
                 <h4>Our social networks</h4>
                 <div class="footer__socials">
-
                     <a href="#" title="Instagram">
-                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
-                        </svg>
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
                     </a>
-
                     <a href="#" title="TikTok">
-                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z" />
-                        </svg>
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
                     </a>
-
                     <a href="#" title="YouTube">
-                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z" />
-                        </svg>
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
                     </a>
-
                 </div>
             </div>
-
         </div>
-
         <div class="footer__bottom">
             <p>© 2025 Shore Guesthouse. All rights reserved.</p>
         </div>
     </footer>
+
     <script src="main.js"></script>
 </body>
-
 </html>
