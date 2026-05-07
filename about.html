@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shore Guesthouse - Information</title>
+    <link rel="stylesheet" href="css/aboutus.css">
+</head>
+
+<body>
+
+    <header id="header">
+        <div class="logo">Shore Guesthouse</div>
+
+        <input type="checkbox" id="burger-toggle" class="burger-toggle">
+
+        <label for="burger-toggle" class="burger-menu" aria-label="Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </label>
+
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="Пошук...">
+
+            <button class="search-btn">
+                <svg class="icon" xmlns="http://www.w3.org/2000/svg"
+                     width="16" height="16" fill="currentColor"
+                     viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                </svg>
+            </button>
+        </div>
+
+        <nav class="main-nav">
+            <ul class="nav-header">
+
+                <li class="nav-item has-submenu">
+                    <a class="nav-link" href="index.html">Gallery</a>
+
+                    <ul class="submenu">
+                        <li><a href="index.html#Bedrooms">Bedrooms</a></li>
+                        <li><a href="index.html#Terraces">Terraces</a></li>
+                        <li><a href="index.html#Pools">Sea View</a></li>
+                        <li><a href="index.html#CommonSpaces">Common Spaces</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item has-submenu">
+                    <a class="nav-link" href="#">Information</a>
+
+                    <ul class="submenu">
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="index.html#Guest Reviews">Reviews</a></li>
+                        <li><a href="index.html#Contacts">Contacts</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html#bookNowBtn">Book now</a>
+                </li>
+
+            </ul>
+        </nav>
+
+        <a href="#authModal" class="sign-in-btn">Sign In</a>
+    </header>
+
+    <div class="modal" id="authModal">
+
+        <div class="modal-overlay"></div>
+
+        <div class="modal-content">
+
+            <a href="#" class="close-modal">&times;</a>
+
+            <h2>Sign In</h2>
+
+            <form class="auth-form" action="#" method="post">
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+
+                    <input type="email"
+                           id="email"
+                           placeholder="your@email.com"
+                           required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+
+                    <input type="password"
+                           id="password"
+                           placeholder="••••••••"
+                           required>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    Log In
+                </button>
+
+                <p class="form-footer">
+                    Don't have an account?
+                    <a href="#">Sign up</a>
+                </p>
+
+            </form>
+
+        </div>
+    </div>
+
+    <main>
+
+        <div class="info-title-bar">
+            <h1>Information</h1>
+        </div>
+
+        <div class="hero-image-wrap">
+
+            <img class="hero-image"
+                 src="images/us.svg"
+                 alt="Village street in Santorini">
+
+            <div class="hero-caption">
+                This house, and this village, have been a part of our lives for generations.
+            </div>
+
+        </div>
+
+        <div class="story-section">
+
+            <h2>My Story</h2>
+
+            <div>
+
+                <p>
+                    Shore Guesthouse is a dream come true,
+                    a labor of love inspired by the childhood summers
+                    I spent here with my grandparents.
+                    Their stories of Oia, the warmth of the island life,
+                    and the magic of this place have always stayed with me.
+                    Restoring this home has been a way to honor their memory
+                    and share the spirit of Oia with others.
+                </p>
+
+                <img class="story-photo"
+                     src="images/about.svg"
+                     alt="Family photo">
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <footer class="footer">
+
+        <div class="footer__grid">
+
+            <div class="footer__brand">
+
+                <h2>Shore Guesthouse</h2>
+
+                <div class="divider"></div>
+
+                <p>info@shoreguesthouse.com.ua</p>
+                <p>+38 067 121 89</p>
+
+            </div>
+
+            <div class="footer__col" id="Contacts">
+
+                <h4>Information</h4>
+
+                <ul>
+                    <li><a href="about.html">About us</a></li>
+                    <li><a href="index.html#Guest Reviews">Reviews</a></li>
+                </ul>
+
+            </div>
+
+            <div class="footer__col">
+
+                <h4>Services</h4>
+
+                <ul>
+                    <li><a href="#">Gifts & promotions</a></li>
+                    <li><a href="#">Reservations</a></li>
+                    <li><a href="#">Returns</a></li>
+                </ul>
+
+            </div>
+
+            <div class="footer__col">
+
+                <h4>Our social networks</h4>
+
+                <div class="footer__socials">
+
+                    <a href="#" title="Instagram">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+
+                    <a href="#" title="TikTok">
+                        <i class="fa-brands fa-tiktok"></i>
+                    </a>
+
+                    <a href="#" title="YouTube">
+                        <i class="fa-brands fa-youtube"></i>
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="footer__bottom">
+            <p>© 2025 Shore Guesthouse. All rights reserved.</p>
+        </div>
+
+    </footer>
+
+    <button id="scrollToTop" aria-label="Scroll to top">
+        ↑
+    </button>
+
+    <script>
+
+        const scrollBtn = document.getElementById('scrollToTop');
+
+        window.addEventListener('scroll', () => {
+            scrollBtn.classList.toggle(
+                'visible',
+                window.scrollY > 300
+            );
+        });
+
+        scrollBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+    </script>
+
+</body>
+</html>

@@ -1,6 +1,3 @@
-// ═══════════════════════════════════════════════════════
-// ТЕКСТИ (всі тексти сайту тут — редагуй в одному місці)
-// ═══════════════════════════════════════════════════════
 const TEXTS = {
     subscribe: {
         banner:  '🔔 Підпишіться на сповіщення від Shore Guesthouse — отримуйте ексклюзивні пропозиції та новини першими!',
@@ -11,7 +8,7 @@ const TEXTS = {
     adModal: {
         label:  'Реклама',
         title:  'Літо 2026 на Санторіні',
-        desc:   'Забронюйте зараз і отримайте знижку 15% на проживання у вересні. Пропозиція обмежена!',
+        desc:   'Забронюйте зараз і отримайте знижку 15% на проживання. Пропозиція обмежена!',
         btnLearn: 'Дізнатись більше',
     },
     stickyAd: {
@@ -36,9 +33,7 @@ const TEXTS = {
     },
 };
 
-// ═══════════════════════════════════════════════════════
-// ІНІЦІАЛІЗАЦІЯ ТЕКСТІВ
-// ═══════════════════════════════════════════════════════
+// Ініціалізація текстів на сторінці 
 function initTexts() {
     document.getElementById('subscribe-banner-text').textContent     = TEXTS.subscribe.banner;
     document.getElementById('subscribeBannerAccept').textContent      = TEXTS.subscribe.accept;
@@ -69,9 +64,7 @@ function initTexts() {
 }
 
 
-// ═══════════════════════════════════════════════════════
-// 1. КНОПКА "ВГОРУ"
-// ═══════════════════════════════════════════════════════
+//конпка вгору
 const scrollBtn = document.getElementById('scrollToTop');
 scrollBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 window.addEventListener('scroll', () => {
@@ -79,9 +72,7 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 
 
-// ═══════════════════════════════════════════════════════
-// 2. БАНЕР ПІДПИСКИ
-// ═══════════════════════════════════════════════════════
+//банер підписки
 const SUBSCRIBE_KEY = 'shore_subscribed';
 
 function showSubscribeBanner() {
@@ -107,9 +98,7 @@ function showThankYou() {
 }
 
 
-// ═══════════════════════════════════════════════════════
-// 3. РЕКЛАМНА МОДАЛКА
-// ═══════════════════════════════════════════════════════
+//рекламна модалка при скролі
 const adModal    = document.getElementById('adModal');
 const adCloseBtn = document.getElementById('adCloseBtn');
 let adShown = false;
@@ -151,9 +140,7 @@ document.getElementById('adModalLearnBtn').addEventListener('click', (e) => {
 });
 
 
-// ═══════════════════════════════════════════════════════
-// 4. STICKY AD
-// ═══════════════════════════════════════════════════════
+//липкий банер
 const stickyAd = document.getElementById('stickyAd');
 
 document.getElementById('stickyAdClose').addEventListener('click', () => {
@@ -170,9 +157,6 @@ document.getElementById('stickyAdBookBtn').addEventListener('click', (e) => {
 });
 
 
-// ═══════════════════════════════════════════════════════
-// HELPERS ДЛЯ МОДАЛОК
-// ═══════════════════════════════════════════════════════
 function openModal(id) {
     const m = document.getElementById(id);
     m.style.opacity       = '1';
@@ -193,9 +177,6 @@ document.getElementById('summer-modal-btn2').addEventListener('click', () => {
 });
 
 
-// ═══════════════════════════════════════════════════════
-// FOOTER INFO MODALS
-// ═══════════════════════════════════════════════════════
 function openFooterModal(type) {
     const modal = document.getElementById('footerInfoModal');
     const icon  = document.getElementById('footer-modal-icon');
@@ -270,9 +251,7 @@ document.getElementById('footerInfoModal').addEventListener('click', function(e)
 });
 
 
-// ═══════════════════════════════════════════════════════
-// BOOKING SYSTEM
-// ═══════════════════════════════════════════════════════
+//система букінгу
 const bookedDates = [
     '2026-06-10','2026-06-11','2026-06-12',
     '2026-06-18','2026-06-19',
@@ -281,7 +260,6 @@ const bookedDates = [
 
 const bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
 let activePromoCodes = JSON.parse(localStorage.getItem('promoCodes') || '[]');
-// Track which promo code was just generated (for one-time use in booking flow)
 let pendingPromoCode = null;
 
 let calYear, calMonth;
@@ -420,8 +398,6 @@ function submitBooking() {
     const email  = document.getElementById('b-email').value.trim();
     const guests = document.getElementById('b-guests').value.trim();
     const promo  = (document.getElementById('b-promo')?.value || '').trim().toUpperCase();
-
-    // One-time promo: only valid if it's the pending code set via goToBookingWithPromo
     const hasDiscount = promo && pendingPromoCode && promo === pendingPromoCode;
 
     if (!name)   { alert("Введіть ваше ім'я."); return; }
@@ -430,8 +406,6 @@ function submitBooking() {
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { alert('Введіть коректний email.'); return; }
     if (!guests) { alert('Введіть кількість гостей.'); return; }
     if (!/^\+?[\d\s\-()]{7,}$/.test(phone)) { alert('Введіть коректний номер телефону.'); return; }
-
-    // Mark promo as used — remove from active list
     if (hasDiscount) {
         activePromoCodes = activePromoCodes.filter(c => c !== pendingPromoCode);
         localStorage.setItem('promoCodes', JSON.stringify(activePromoCodes));
@@ -471,9 +445,7 @@ function toDateStr(d) { return d.toISOString().split('T')[0]; }
 function formatDate(d) { return d.toLocaleDateString('uk-UA', { day:'numeric', month:'long', year:'numeric' }); }
 
 
-// ═══════════════════════════════════════════════════════
-// PROMO SYSTEM
-// ═══════════════════════════════════════════════════════
+//генерація промокоду
 function generatePromoCode() {
     const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
     let code = 'SHORE-';
@@ -483,7 +455,6 @@ function generatePromoCode() {
 
 function openPromoModal() {
     const code = generatePromoCode();
-    // Store as pending — will be added to activePromoCodes only when used
     pendingPromoCode = code;
     activePromoCodes.push(code);
     localStorage.setItem('promoCodes', JSON.stringify(activePromoCodes));
@@ -504,7 +475,6 @@ function goToBookingWithPromo() {
     closePromoModal();
     stickyAd.style.display = 'none';
     openBookingModal();
-    // Insert promo code after opening the form — code is valid only once
     setTimeout(() => {
         goToForm();
         setTimeout(() => {
@@ -520,9 +490,7 @@ function goToBookingWithPromo() {
 }
 
 
-// ═══════════════════════════════════════════════════════
-// ВАЛІДАЦІЯ ПРОМОКОДУ (one-time: тільки pendingPromoCode)
-// ═══════════════════════════════════════════════════════
+// Валідація промокоду в формі бронювання
 function initPromoValidation() {
     const inp = document.getElementById('b-promo');
     const st  = document.getElementById('promo-status');
